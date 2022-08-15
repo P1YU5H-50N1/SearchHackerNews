@@ -5,9 +5,15 @@ const Article = ({ article, margin }) => {
 	const hasChildren = article.children && article.children.length;
 	return (
 		<div style={{ marginLeft: margin }}>
-			<Interweave content={article.text} />
-			<div>
-				<i>Author: {article.author}</i>
+			{article.text && (
+				<div className="comment">
+					<Interweave content={article.text} />
+				</div>
+			)}
+			<div className="author">
+				<i>
+					Author: {article.author} | Points: {article.points}
+				</i>
 			</div>
 			{hasChildren
 				? article.children.map((child_article, idx) => {
@@ -15,7 +21,7 @@ const Article = ({ article, margin }) => {
 							<Article
 								article={child_article}
 								key={idx}
-								margin={margin + 40}
+								margin={margin < 60 ? margin + 10 : margin}
 							/>
 						);
 				  })
