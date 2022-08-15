@@ -14,7 +14,7 @@ const Home = () => {
 		}
 		console.log(query);
 		axios
-			.get(`${hackerNewsAPI}${query}&page=${currentPage}&hitsPerPage=50`)
+			.get(`${hackerNewsAPI}${query}&page=${currentPage}&hitsPerPage=20`)
 			.then((res) => {
 				setPage(res.data.page);
 				setNews(res.data.hits);
@@ -23,11 +23,11 @@ const Home = () => {
 	};
 	const nextPage = (e) => {
 		e.preventDefault();
-		setPage(currentPage + 1);
 		setNews([]);
 		axios
-			.get(`${hackerNewsAPI}${query}&page=${currentPage}`)
+			.get(`${hackerNewsAPI}${query}&page=${currentPage+1}&hitsPerPage=20`)
 			.then((res) => {
+				console.log(res.data)
 				setPage(res.data.page);
 				setNews(res.data.hits);
 			});
@@ -54,7 +54,11 @@ const Home = () => {
 					/>
 				))}
 			</div>
-			<button onClick={nextPage}>NextPage</button>
+			{news.length ? (
+				<button style={{ margin: "2em" }} onClick={nextPage}>
+					NextPage
+				</button>
+			) : null}
 		</div>
 	);
 };
