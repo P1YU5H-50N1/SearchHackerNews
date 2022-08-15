@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactFragment as Fragment } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Article from "../components/Article";
-import { Markup } from 'interweave';
-
+import { Markup } from "interweave";
 
 const PostDetail = () => {
 	const { id } = useParams();
@@ -17,17 +16,16 @@ const PostDetail = () => {
 		axios.get(hackerNewsAPI).then((res) => {
 			setArticle(res.data.children);
 			setTitle(res.data.title);
-			setAuthor(res.data.author)
+			setAuthor(res.data.author);
 			setResponse(res.data);
-			// console.log(article);
 		});
 	}, []);
 
-	console.log(id);
 	return (
-		<div>
-			<h1>{title}</h1>
-			<Article  article={response} margin={0}/>
+		<div className="container">
+			<h1>{article.length ? title : "Loading..."}</h1>
+			<Link className="link"to="/">Back To Home</Link>
+			<Article article={response} margin={0} />
 		</div>
 	);
 };
